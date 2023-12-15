@@ -27,11 +27,11 @@ clear.addEventListener("click", Clear);
 
 function renderPixels(pixelValue) {
   canvas.innerHTML = "";
-  let pixelSide = 500 / pixelValue;
+  let pixelSide = 100 / pixelValue;
   for (let i = 0; i < pixelValue; i++) {
     for (let j = 0; j < pixelValue; j++) {
       let pixel = document.createElement("div");
-      pixel.style.width = pixelSide + "px";
+      pixel.style.width = pixelSide + "%";
       pixel.classList.add("pixel");
       canvas.appendChild(pixel);
     }

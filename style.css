@@ -1,12 +1,19 @@
 *{
     box-sizing: border-box;
 }
+
+body{
+    display: flex;
+    flex-direction: row;
+}
   
 #canvas{
+    margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     max-width: 600px;
     height: 600px;
+    min-width: 600px;
     margin-left: auto;
     margin-right: auto;
     /* border: 0.5px solid grey; */
@@ -16,6 +23,13 @@
     flex-grow: 1;
     flex-shrink: 1;
     border: 0.5px solid grey;
+}
+
+#toolbar{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
   
   

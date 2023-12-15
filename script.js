@@ -35,18 +35,6 @@ eraser.addEventListener("click", () => {
 
 clear.addEventListener("click", Clear);
 
-// function renderPixels(pixelValue) {
-//   let totalPixels = pixelValue * pixelValue;
-//   canvas.innerHTML = "";
-//   let pixelSide = 500 / pixelValue;
-//   for (let i = 0; i < totalPixels; i++) {
-//     let pixel = document.createElement("div");
-//     pixel.style.width = pixelSide + "px";
-//     pixel.classList.add("pixel");
-//     canvas.appendChild(pixel);
-//   }
-// }
-
 function renderPixels(pixelValue) {
   canvas.innerHTML = "";
   let pixelSide = 100 / pixelValue;

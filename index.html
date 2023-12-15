@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Sketch-pad</title>
+  </head>
+  <body>
+    <div id="toolbar">
+      <div>
+        <p id="dimension">32 x 32</p>
+        <input
+          type="range"
+          name="pixels-per-side"
+          id="pixels"
+          min="1"
+          max="120"
+          value="32"
+        />
+      </div>
+      <button class="clear">Clear</button>
+    </div>
+    <div id="canvas">
+      <!-- <div class="pixel"></div> -->
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

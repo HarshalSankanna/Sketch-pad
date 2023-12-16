@@ -11,6 +11,10 @@ let isDrawing = false;
 let isErasing = false;
 let randomBtn = document.querySelector(".randomize");
 let random = false;
+let selectedColor = "#60b7ff40";
+let btnShadow = "#0366d64d 0px 0px 0px 1px";
+let selectShadow =
+  "rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px";
 
 canvas.style.cursor = "crosshair";
 
@@ -37,8 +41,10 @@ randomBtn.addEventListener("click", () => {
   Sketch(random);
   document.querySelectorAll("button").forEach((item) => {
     item.style.backgroundColor = "";
+    item.style.boxShadow = selectShadow;
   });
-  randomBtn.style.backgroundColor = "grey";
+  randomBtn.style.backgroundColor = selectedColor;
+  randomBtn.style.boxShadow = btnShadow;
   colorPicker.disabled = true;
 });
 
@@ -65,8 +71,10 @@ function renderPixels(pixelValue) {
 function Sketch(random) {
   document.querySelectorAll("button").forEach((item) => {
     item.style.backgroundColor = "";
+    item.style.boxShadow = selectShadow;
   });
-  draw.style.backgroundColor = "grey";
+  draw.style.backgroundColor = selectedColor;
+  draw.style.boxShadow = btnShadow;
   canvas.addEventListener("mousedown", (event) => {
     isDrawing = true;
     event.preventDefault();
@@ -88,7 +96,12 @@ function Sketch(random) {
     });
     item.addEventListener("mousedown", (event) => {
       if (event.buttons === 1) {
-        item.style.backgroundColor = currentColor;
+        if (random == true) {
+          let randomColor = Math.floor(Math.random() * 16777215).toString(16);
+          item.style.backgroundColor = "#" + randomColor;
+        } else if (random == false) {
+          item.style.backgroundColor = currentColor;
+        }
       }
     });
   });
@@ -100,8 +113,10 @@ function Sketch(random) {
 function Erase() {
   document.querySelectorAll("button").forEach((item) => {
     item.style.backgroundColor = "";
+    item.style.boxShadow = selectShadow;
   });
-  eraser.style.backgroundColor = "grey";
+  eraser.style.backgroundColor = selectedColor;
+  eraser.style.boxShadow = btnShadow;
   canvas.addEventListener("mousedown", (event) => {
     isErasing = true;
     event.preventDefault();

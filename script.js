@@ -9,6 +9,8 @@ let eraser = document.querySelector(".eraser");
 let draw = document.querySelector(".draw");
 let isDrawing = false;
 let isErasing = false;
+let randomBtn = document.querySelector(".randomize");
+let random = false;
 
 canvas.style.cursor = "crosshair";
 
@@ -24,7 +26,21 @@ colorPicker.addEventListener("input", (event) => {
   Sketch();
 });
 
-draw.addEventListener("click", Sketch);
+draw.addEventListener("click", () => {
+  random = false;
+  Sketch(random);
+  colorPicker.disabled = false;
+});
+
+randomBtn.addEventListener("click", () => {
+  random = true;
+  Sketch(random);
+  document.querySelectorAll("button").forEach((item) => {
+    item.style.backgroundColor = "";
+  });
+  randomBtn.style.backgroundColor = "grey";
+  colorPicker.disabled = true;
+});
 
 eraser.addEventListener("click", Erase);
 
@@ -41,11 +57,15 @@ function renderPixels(pixelValue) {
       canvas.appendChild(pixel);
     }
   }
-  Sketch();
+  colorPicker.disabled = false;
+  random = false;
+  Sketch(random);
 }
 
-function Sketch() {
-  eraser.style.backgroundColor = "";
+function Sketch(random) {
+  document.querySelectorAll("button").forEach((item) => {
+    item.style.backgroundColor = "";
+  });
   draw.style.backgroundColor = "grey";
   canvas.addEventListener("mousedown", (event) => {
     isDrawing = true;
@@ -56,13 +76,20 @@ function Sketch() {
   });
   let pixelList = document.querySelectorAll(".pixel");
   pixelList.forEach((item) => {
-    item.addEventListener("mouseover", () => {
-      if (isDrawing) {
-        item.style.backgroundColor = currentColor;
+    item.addEventListener("mouseover", (event) => {
+      if (isDrawing && event.buttons === 1) {
+        if (random == true) {
+          let randomColor = Math.floor(Math.random() * 16777215).toString(16);
+          item.style.backgroundColor = "#" + randomColor;
+        } else if (random == false) {
+          item.style.backgroundColor = currentColor;
+        }
       }
     });
-    item.addEventListener("mousedown", () => {
-      item.style.backgroundColor = currentColor;
+    item.addEventListener("mousedown", (event) => {
+      if (event.buttons === 1) {
+        item.style.backgroundColor = currentColor;
+      }
     });
   });
   canvas.addEventListener("mouseleave", () => {
@@ -71,7 +98,9 @@ function Sketch() {
 }
 
 function Erase() {
-  draw.style.backgroundColor = "";
+  document.querySelectorAll("button").forEach((item) => {
+    item.style.backgroundColor = "";
+  });
   eraser.style.backgroundColor = "grey";
   canvas.addEventListener("mousedown", (event) => {
     isErasing = true;
@@ -82,13 +111,15 @@ function Erase() {
   });
   let pixelList = document.querySelectorAll(".pixel");
   pixelList.forEach((item) => {
-    item.addEventListener("mouseover", () => {
-      if (isErasing) {
+    item.addEventListener("mouseover", (event) => {
+      if (isErasing && event.buttons === 1) {
         item.style.backgroundColor = "white";
       }
     });
-    item.addEventListener("mousedown", () => {
-      item.style.backgroundColor = "white";
+    item.addEventListener("mousedown", (event) => {
+      if (event.buttons === 1) {
+        item.style.backgroundColor = "white";
+      }
     });
   });
   canvas.addEventListener("mouseleave", () => {
@@ -101,7 +132,9 @@ function Clear() {
   pixelList.forEach((item) => {
     item.style.backgroundColor = "white";
   });
-  Sketch();
+  colorPicker.disabled = false;
+  random = false;
+  Sketch(random);
 }
 
 renderPixels(pixelValue);

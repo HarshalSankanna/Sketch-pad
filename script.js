@@ -47,8 +47,9 @@ function renderPixels(pixelValue) {
 function Sketch() {
   eraser.style.backgroundColor = "";
   draw.style.backgroundColor = "grey";
-  canvas.addEventListener("mousedown", () => {
+  canvas.addEventListener("mousedown", (event) => {
     isDrawing = true;
+    event.preventDefault();
   });
   canvas.addEventListener("mouseup", () => {
     isDrawing = false;
@@ -72,8 +73,9 @@ function Sketch() {
 function Erase() {
   draw.style.backgroundColor = "";
   eraser.style.backgroundColor = "grey";
-  canvas.addEventListener("mousedown", () => {
+  canvas.addEventListener("mousedown", (event) => {
     isErasing = true;
+    event.preventDefault();
   });
   canvas.addEventListener("mouseup", () => {
     isErasing = false;

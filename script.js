@@ -7,8 +7,10 @@ let colorPicker = document.querySelector("#color-picker");
 let currentColor = colorPicker.value;
 let eraser = document.querySelector(".eraser");
 let draw = document.querySelector(".draw");
+let isDrawing = false;
+let isErasing = false;
 
-draw.style.backgroundColor = "grey";
+canvas.style.cursor = "crosshair";
 
 pixels.addEventListener("input", () => {
   pixelValue = pixels.value;
@@ -19,19 +21,12 @@ pixels.addEventListener("input", () => {
 
 colorPicker.addEventListener("input", (event) => {
   currentColor = event.target.value;
-});
-
-draw.addEventListener("click", () => {
-  eraser.style.backgroundColor = "";
-  draw.style.backgroundColor = "grey";
   Sketch();
 });
 
-eraser.addEventListener("click", () => {
-  draw.style.backgroundColor = "";
-  eraser.style.backgroundColor = "grey";
-  Erase();
-});
+draw.addEventListener("click", Sketch);
+
+eraser.addEventListener("click", Erase);
 
 clear.addEventListener("click", Clear);
 
@@ -50,20 +45,52 @@ function renderPixels(pixelValue) {
 }
 
 function Sketch() {
+  eraser.style.backgroundColor = "";
+  draw.style.backgroundColor = "grey";
+  canvas.addEventListener("mousedown", () => {
+    isDrawing = true;
+  });
+  canvas.addEventListener("mouseup", () => {
+    isDrawing = false;
+  });
   let pixelList = document.querySelectorAll(".pixel");
   pixelList.forEach((item) => {
     item.addEventListener("mouseover", () => {
+      if (isDrawing) {
+        item.style.backgroundColor = currentColor;
+      }
+    });
+    item.addEventListener("mousedown", () => {
       item.style.backgroundColor = currentColor;
     });
+  });
+  canvas.addEventListener("mouseleave", () => {
+    isDrawing = false;
   });
 }
 
 function Erase() {
+  draw.style.backgroundColor = "";
+  eraser.style.backgroundColor = "grey";
+  canvas.addEventListener("mousedown", () => {
+    isErasing = true;
+  });
+  canvas.addEventListener("mouseup", () => {
+    isErasing = false;
+  });
   let pixelList = document.querySelectorAll(".pixel");
   pixelList.forEach((item) => {
     item.addEventListener("mouseover", () => {
+      if (isErasing) {
+        item.style.backgroundColor = "white";
+      }
+    });
+    item.addEventListener("mousedown", () => {
       item.style.backgroundColor = "white";
     });
+  });
+  canvas.addEventListener("mouseleave", () => {
+    isErasing = false;
   });
 }
 
@@ -72,6 +99,7 @@ function Clear() {
   pixelList.forEach((item) => {
     item.style.backgroundColor = "white";
   });
+  Sketch();
 }
 
 renderPixels(pixelValue);

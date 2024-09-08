@@ -8,6 +8,10 @@ body{
     background-color: #eae9e9;
 }
 
+.header{
+    margin-bottom: 50px;
+}
+
 .main{
     padding-top: 40px;
     display: flex;
